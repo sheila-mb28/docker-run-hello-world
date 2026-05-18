@@ -22,23 +22,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    # 🐘 Añadimos una base de datos PostgreSQL temporal en GitHub Actions
-    # para que los tests tengan un "entorno" real donde ejecutarse.
-    services:
-      postgres-test:
-        image: postgres:15
-        env:
-          POSTGRES_DB: gobierno_smmb   # ⚠️ Sustituye por tu base de datos
-          POSTGRES_USER: aaee_gobierno
-          POSTGRES_PASSWORD: aaee1234
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
     steps:
 
       # Descargar código
@@ -57,10 +40,6 @@ jobs:
       # 🛠️ AQUÍ ESTÁ EL TRUCO: Le pasamos las variables de entorno que Spring Boot necesita para los tests
       - name: Compilar proyecto
         run: mvn clean package
-        env:
-          SPRING_DATASOURCE_URL: jdbc:postgresql://172.31.11.240:5432/gobierno_smmb # ⚠️ Sustituye por tu BBDD
-          SPRING_DATASOURCE_USERNAME: aaee_gobierno
-          SPRING_DATASOURCE_PASSWORD: aaee1234
 
       # Login en GitHub Container Registry
       - name: Login GHCR
