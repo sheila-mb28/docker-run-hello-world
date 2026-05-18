@@ -12,7 +12,7 @@ services:
     restart: unless-stopped
 
   api:
-    image: ghcr.io/TU_USUARIO/ministerio_backend_993:latest
+    image: ghcr.io/sheila-mb28/ministerio_backend_993:latest
     container_name: spring_api
     env_file:
       - .env
